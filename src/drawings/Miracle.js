@@ -20,19 +20,40 @@ const drawHeart = (context, pos, colorStroke, colorFill, transparency) => {
   context.restore();
 };
 
+let id = 1;
+
 const generateMiracle = (pos, color1, color2) => {
-  const draw = (context, config) => {
+  const myID = id;
+  id += 1;
+  // reset so we don't have to deal with giant numbers
+  if (id > 1000) id = 1;
+
+  let isFaded = false;
+  const draw = (context, config, { createdAt }) => {
+    let transparency = config.transparency;
+    if (createdAt !== 0) {
+      transparency = Math.max(config.transparency - (config.transparency * ((Date.now() - createdAt) / 1000) / (config.fadeTime * 32)), 0);
+      if (!config.mortalMiracles && transparency < config.transparency / 4) {
+        transparency = config.transparency / 4;
+      }
+      if (transparency <= 0) {
+        isFaded = true;
+      }
+    }
     drawHeart(
       context,
       pos,
       config.colors(color1),
       config.colors(color2),
-      config.transparency
+      transparency
     );
   };
 
   return {
+    id: myID,
     draw,
+    isFaded,
+    createdAt: new Date(),
   };
 }
 

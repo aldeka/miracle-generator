@@ -11,25 +11,37 @@
 
 <script>
   export let config;
+  export let miracles;
+  export let trails;
+  export let addTrail;
+  export let addMiracle;
+  export let removeBeing;
+  export let removeTrails;
+  export let removeMiracles;
+
   import { onMount } from 'svelte';
   import { generateMiracle } from './drawings/Miracle';
   import { generateBeing } from './drawings/Being';
   import { getRandomItem } from './drawings/utils';
 
-  let trails = []; // list of trails and beings
-  const miracles = []; // collisions; nothing from here is ever removed;
-
   const getColorId = () => {
     // prefer colors that aren't currently on the screen
     const usedColors = trails.map(trail => config.colors(trail.colorId));
     let options = new Array(config.colorChoices.length);
+    let rawColorId;
     const diff = options
       .map((x, i) => i)
       .filter((x, i) => !usedColors.includes(i));
     if (diff.length > 0) {
-      return getRandomItem(diff).item;
+      rawColorId = getRandomItem(diff).item;
     }
-    return getRandomItem(config.colorChoices).index;
+    rawColorId = getRandomItem(config.colorChoices).index;
+
+    // multiplication is to normalize distribution
+    // in case the user switches color schemes
+    // since they have different numbers of choices
+    // (the color getter function modulos them for you)
+    return rawColorId + getRandomItem([0, 1, 2]).item * config.colorChoices.length;
   };
 
   let canvas;
@@ -59,7 +71,7 @@
     return true;
   }
 
-  function getCollision(b, otherBeings) {
+  function getCollision(b, otherBeings, trailWidth) {
     let result = {
       isColliding: false,
       otherBeingIndex: -1,
@@ -75,7 +87,7 @@
         continue;
       }
       const distance = Math.hypot(b2.trail.end.x - b.trail.end.x, b2.trail.end.y - b.trail.end.y);
-      if (distance < config.trailWidth / 2) {
+      if (distance < trailWidth / 2) {
         result.isColliding = true;
         result.otherBeingIndex = i;
         result.collision = { ...b.trail.end };
@@ -105,17 +117,7 @@
 
     // draw children
     let trailsToDelete = [];
-
-    function removeBeing(b, index) {
-      const trail = {
-        ...b.trail,
-        isDone: true,
-        doneAt: new Date(),
-      };
-      const draw = (context, config) => b.drawTrail(context, config, trail);
-      trail.draw = draw;
-      trails[index] = trail;
-    }
+    let miraclesToDelete = [];
 
     // draw active trails (beings) and inactive trails
     // (stored in the same array to preserve ordering)
@@ -131,14 +133,22 @@
             isColliding,
             otherBeingIndex,
             collision
-          } = getCollision(t, trails.slice(0, Math.max(0, index)));
+          } = getCollision(
+            t,
+            trails.slice(0, Math.max(0, index)),
+            config.trailWidth
+          );
           if (isColliding) {
             console.log('collision!', collision);
-            t.trail.length += config.trailWidth / 4;
-            trails[otherBeingIndex].trail.length += config.trailWidth / 4;
             removeBeing(t, index);
             removeBeing(trails[otherBeingIndex], otherBeingIndex);
-            miracles.push(generateMiracle(collision, t.colorId, trails[otherBeingIndex].colorId));
+            addMiracle(
+              generateMiracle(
+                collision,
+                t.colorId,
+                trails[otherBeingIndex].colorId
+              )
+            );
           }
         }
       }
@@ -151,12 +161,24 @@
     });
 
     // draw miracles on top
-    miracles.forEach(m => m.draw(world, config));
+    miracles.forEach(m => {
+      const result = m.draw(world, config, m);
+      if (result && result.isFaded) {
+        // delete miracle
+        miraclesToDelete.push(m.id);
+      }
+    });
 
     // delete defunct trails
     if (trailsToDelete.length > 0) {
-      trails = trails.filter(t => trailsToDelete.indexOf(t.id) === -1);
+      removeTrails(trailsToDelete);
       trailsToDelete = [];
+    }
+
+    // delete defunct miracles
+    if (miraclesToDelete.length > 0) {
+      removeMiracles(miraclesToDelete);
+      miraclesToDelete = [];
     }
 
     window.requestAnimationFrame(draw);
@@ -178,7 +200,7 @@
           let newBeingCount = getRandomItem(newBeingCountOptions).item;
           while (newBeingCount > 0) {
             const b = generateBeing(getColorId(), worldWidth, worldHeight, config);
-            trails.push(b);
+            addTrail(b);
             newBeingCount -= 1;
           }
         }

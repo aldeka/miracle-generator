@@ -21,7 +21,21 @@
     background: rgba(0, 0, 0, 0.1);
     color: rgba(0, 0, 0, 0.5);
   }
+
+  h4 {
+    margin: 0;
+    margin-bottom: 16px;
+  }
+
   button {
+    cursor: pointer;
+  }
+
+  .head-label {
+    margin-bottom: 8px;
+  }
+
+  .nav-toggle {
     position: absolute;
     top: -27px;
     right: 0;
@@ -30,10 +44,9 @@
     padding: 4px;
     border-radius: 0;
     font-weight: 200;
-    cursor: pointer;
   }
 
-  button.x {
+  .nav-toggle.x {
     top: 0;
     height: 36px;
     width: 32px;
@@ -55,6 +68,7 @@
 <script>
   export let config;
   export let setConfig;
+  export let clearMiracles;
 
   // state
   let hidden = true;
@@ -68,14 +82,24 @@
 <div class={`menu ${hidden ? "hidden" : ""}`}>
   <button
     role="button"
-    class={`${config.darkMode ? "dark" : "light"} ${hidden ? "" : "x"}`}
+    class={`nav-toggle ${config.darkMode ? "dark" : "light"} ${hidden ? "" : "x"}`}
     on:click={toggleMenu}
   >
     { hidden ? "options" : "x" }
   </button>
   <nav class={`${config.darkMode ? "dark" : "light"}`}>
     <h4>Options</h4>
-    <div>color scheme</div>
+    <label for="dark-mode">
+      <input
+        type="checkbox"
+        id="dark-mode"
+        checked={config.darkMode}
+        on:change={() => setConfig('darkMode', !config.darkMode)}
+      />
+      dark mode?
+    </label>
+
+    <div class="head-label">color scheme</div>
     <label for="DEFAULT">
       <input
         type="radio"
@@ -117,30 +141,21 @@
       cool
     </label>
 
-    <label for="dark-mode">
-      <input
-        type="checkbox"
-        id="dark-mode"
-        checked={config.darkMode}
-        on:change={() => setConfig('darkMode', !config.darkMode)}
-      />
-      dark mode?
-    </label>
-
     <label for="trail-width">
+      size
       <input
         type="number"
         id="trail-width"
         value={config.trailWidth}
         on:change={(e) => setConfig('trailWidth', parseInt(e.target.value, 10))}
         min=12
-        max=48
-        step=6
+        max=32
+        step=4
       />
-      size
     </label>
 
     <label for="trail-width">
+      speed
       <input
         type="number"
         id="trail-width"
@@ -149,7 +164,18 @@
         min=0
         max=8
       />
-      speed
     </label>
+
+    <label for="mortal-miracles">
+      <input
+        type="checkbox"
+        id="mortal-miracles"
+        checked={config.mortalMiracles}
+        on:change={() => setConfig('mortalMiracles', !config.mortalMiracles)}
+      />
+      miracles disappear?
+    </label>
+
+    <button role="button" on:click={clearMiracles}>clear miracles</button>
   </nav>
 </div>

@@ -16,24 +16,20 @@
   import Options from './Options.svelte';
   import constants from './constants';
 
-  // const configOptions = {
-  //   trailWidth: [12, constants.TRAIL_WIDTH, 24, 36],
-  //   speed: [2, 3, constants.SPEED, 5, 6],
-  //   colorChoices: Object.keys(constants.COLOR_OPTIONS),
-  //   maxNewBeings: [constants.MAX_NEW_BEINGS, 4, 5, 6],
-  //   fadeTime: [3, constants.FADE_TIME, 30, 120],
-  // };
-
   const colorsGetter = colorChoices => ((id) => {
     const adjustedId = id % colorChoices.length;
     return colorChoices[adjustedId];
   });
+
+  let miracles = [];
+  let trails = [];
 
   let config = {
     darkMode: false,
     trailWidth: constants.TRAIL_WIDTH,
     speed: constants.SPEED,
     transparency: constants.DEFAULT_TRANSPARENCY,
+    mortalMiracles: false,
     fadeTime: constants.FADE_TIME,
     colorset: 'DEFAULT',
     colors: colorsGetter(constants.COLOR_OPTIONS.DEFAULT),
@@ -41,6 +37,32 @@
     maxNewBeings: constants.MAX_NEW_BEINGS,
     maxActiveBeings: constants.MAX_NEW_BEINGS * 2 - 1,
   };
+
+  const addMiracle = m => miracles.push(m);
+  const addTrail = t => trails.push(t);
+
+  const removeBeing = (b, index) => {
+    const trail = {
+      ...b.trail,
+      isDone: true,
+      doneAt: new Date(),
+    };
+    trail.length += config.trailWidth / 4;
+    const draw = (context, config) => b.drawTrail(context, config, trail);
+    trail.draw = draw;
+    trails[index] = trail;
+  }
+
+  const removeMiracles = (ids) => {
+    miracles = miracles.filter(m => ids.indexOf(m.id) === -1);
+  };
+  const removeTrails = (ids) => {
+    trails = trails.filter(t => ids.indexOf(t.id) === -1);
+  };
+
+  const clearMiracles = () => {
+    miracles = [];
+  }
 
   const setConfig = (field, value) => {
     config[field] = value;
@@ -57,6 +79,19 @@
 </script>
 
 <div id="container">
-  <World config={config} />
-  <Options config={config} setConfig={setConfig} />
+  <World
+    miracles={miracles}
+    trails={trails}
+    config={config}
+    addMiracle={addMiracle}
+    addTrail={addTrail}
+    removeBeing={removeBeing}
+    removeMiracles={removeMiracles}
+    removeTrails={removeTrails}
+  />
+  <Options
+    config={config}
+    setConfig={setConfig}
+    clearMiracles={clearMiracles}
+  />
 </div>
