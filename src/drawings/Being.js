@@ -31,7 +31,7 @@ const getVector = (start, worldWidth, worldHeight) => {
     yMultiplier = 1;
   }
   const rawDx = getRandomRange(1.00);
-  const rawDy = 1 - rawDx;
+  const rawDy = 1 - rawDx; // TODO fix; 1 is the hypotenuse not the blockwise length!
 
   return {
     dx: rawDx * xMultiplier,
