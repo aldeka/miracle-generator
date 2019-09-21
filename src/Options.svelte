@@ -195,5 +195,15 @@
     </label>
 
     <button role="button" on:click={clearMiracles}>clear miracles</button>
+
+    <label for="allow-sound">
+      <input
+        type="checkbox"
+        id="allow-sound"
+        checked={config.allowSound}
+        on:change={() => setConfig('allowSound', !config.allowSound)}
+      />
+      sound?
+    </label>
   </nav>
 </div>

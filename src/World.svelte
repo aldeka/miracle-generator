@@ -20,6 +20,7 @@
   export let removeMiracles;
 
   import { onMount } from 'svelte';
+  import playSound, { BELLS } from './bells';
   import { generateMiracle } from './drawings/Miracle';
   import { generateBeing } from './drawings/Being';
   import { getRandomItem } from './drawings/utils';
@@ -139,7 +140,11 @@
             config.trailWidth
           );
           if (isColliding) {
-            console.log('collision!', collision);
+            const bellId = getRandomItem(Object.keys(BELLS)).item;
+            console.log('a miracle occurred!', `${t.id}/${trails[otherBeingIndex].id}/${config.colors(t.trail.colorId)}/${config.colors(trails[otherBeingIndex].trail.colorId)} ${bellId}`);
+            if (config.allowSound) {
+              playSound(bellId);
+            }
             removeBeing(t, index);
             removeBeing(trails[otherBeingIndex], otherBeingIndex);
             addMiracle(

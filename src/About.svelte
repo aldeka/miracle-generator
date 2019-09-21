@@ -108,5 +108,8 @@
     <p>
       <a href="https://github.com/aldeka/miracle-generator">Source code here</a>.
     </p>
+    <p>
+      Sound effects licensed CC-BY by <a href="https://freesound.org/people/juskiddink/packs/5069/">juskiddink</a>.
+    </p>
   </div>
 </div>

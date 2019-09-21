@@ -37,6 +37,7 @@
     colorChoices: constants.COLOR_OPTIONS.DEFAULT,
     maxNewBeings: constants.MAX_NEW_BEINGS,
     maxActiveBeings: constants.MAX_NEW_BEINGS * 2 - 1,
+    allowSound: true,
   };
 
   const addMiracle = m => miracles.push(m);
