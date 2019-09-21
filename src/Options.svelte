@@ -23,8 +23,7 @@
   }
 
   h4 {
-    margin: 0;
-    margin-bottom: 16px;
+    margin: 4px 0 16px;
   }
 
   button {
@@ -44,6 +43,11 @@
     padding: 4px;
     border-radius: 0;
     font-weight: 200;
+    opacity: 0;
+  }
+
+  .nav-toggle:hover {
+    opacity: 1;
   }
 
   .nav-toggle.x {
@@ -54,6 +58,7 @@
     line-height: 24px;
     font-weight: 100;
     background: none;
+    opacity: 1;
   }
 
   button.light.x:hover {
@@ -85,7 +90,7 @@
     class={`nav-toggle ${config.darkMode ? "dark" : "light"} ${hidden ? "" : "x"}`}
     on:click={toggleMenu}
   >
-    { hidden ? "options" : "x" }
+    {@html hidden ? "options" : "&times;" }
   </button>
   <nav class={`${config.darkMode ? "dark" : "light"}`}>
     <h4>Options</h4>
@@ -163,6 +168,19 @@
         on:change={(e) => setConfig('speed', parseInt(e.target.value, 10))}
         min=0
         max=8
+      />
+    </label>
+
+    <label for="fade-time">
+      fade time
+      <input
+        type="number"
+        id="fade-time"
+        value={config.fadeTime}
+        on:change={(e) => setConfig('fadeTime', parseInt(e.target.value, 10))}
+        min=5
+        max=60
+        step=5
       />
     </label>
 

@@ -14,6 +14,7 @@
 <script>
   import World from './World.svelte';
   import Options from './Options.svelte';
+  import About from './About.svelte';
   import constants from './constants';
 
   const colorsGetter = colorChoices => ((id) => {
@@ -89,6 +90,7 @@
     removeMiracles={removeMiracles}
     removeTrails={removeTrails}
   />
+  <About darkMode={config.darkMode} />
   <Options
     config={config}
     setConfig={setConfig}
