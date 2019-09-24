@@ -1,6 +1,6 @@
 import { getRandomItem, getRandomRange } from './utils';
 
-const getStart = (worldWidth, worldHeight, trailWidth) => {
+export const getStart = (worldWidth, worldHeight, trailWidth) => {
   let prospectiveX = Math.floor(Math.random() * (worldWidth + trailWidth));
   let prospectiveY = Math.floor(Math.random() * (worldHeight + trailWidth));
   if (getRandomItem(['x', 'y']).index === 0) {
@@ -14,7 +14,7 @@ const getStart = (worldWidth, worldHeight, trailWidth) => {
   };
 };
 
-const getVector = (start, worldWidth, worldHeight) => {
+export const getVector = (start, worldWidth, worldHeight, trailWidth) => {
   let xMultiplier = getRandomItem([-1, 1]).item;
   let yMultiplier = getRandomItem([-1, 1]).item;
 
@@ -30,13 +30,21 @@ const getVector = (start, worldWidth, worldHeight) => {
   if (start.y <= worldHeight * 1/3) {
     yMultiplier = 1;
   }
-  const rawDx = getRandomRange(1.00);
-  const rawDy = 1 - rawDx; // TODO fix; 1 is the hypotenuse not the blockwise length!
+  let maxDx = 0.80;
+  let minDx = 0.20;
+  if ((worldWidth / 8 < start.x && start.x < worldWidth * 7 / 8) ||
+    (worldHeight / 8 < start.y && start.y < worldHeight * 7 / 8)
+  ) {
+    maxDx = 1.00;
+    minDx = 0.00;
+  }
+  const rawDx = getRandomRange(maxDx, minDx);
+  const rawDy = Math.sqrt(1 - Math.pow(rawDx, 2));
 
   return {
     dx: rawDx * xMultiplier,
     dy: rawDy * yMultiplier,
-  }
+  };
 };
 
 let id = 1;
@@ -52,7 +60,7 @@ export const generateBeing = (colorId, worldWidth, worldHeight, config) => {
     // freak out
     throw(new Error(`Invalid start ${start.x}, ${start.y} ${typeof(start.x)}`))
   }
-  const vector = getVector(start, worldWidth, worldHeight);
+  const vector = getVector(start, worldWidth, worldHeight, config.trailWidth);
   if (typeof(vector.dx) !== 'number' || typeof(vector.dy) !== 'number') {
     // freak out
     throw(new Error(`Invalid vector ${vector.dx}, ${vector.dy} ${typeof(vector.dx)}`))
