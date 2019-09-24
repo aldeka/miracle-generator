@@ -30,7 +30,7 @@
     trailWidth: constants.TRAIL_WIDTH,
     speed: constants.SPEED,
     transparency: constants.DEFAULT_TRANSPARENCY,
-    mortalMiracles: false,
+    mortalMiracles: true,
     fadeTime: constants.FADE_TIME,
     colorset: 'DEFAULT',
     colors: colorsGetter(constants.COLOR_OPTIONS.DEFAULT),

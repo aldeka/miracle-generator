@@ -159,11 +159,11 @@
       />
     </label>
 
-    <label for="trail-width">
+    <label for="speed">
       speed
       <input
         type="number"
-        id="trail-width"
+        id="speed"
         value={config.speed}
         on:change={(e) => setConfig('speed', parseInt(e.target.value, 10))}
         min=0
