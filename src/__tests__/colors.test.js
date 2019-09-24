@@ -3,8 +3,8 @@ import { COLOR_OPTIONS } from '../constants.js';
 
 describe('getColorId', () => {
   const config = {
-    colorChoices: COLOR_OPTIONS.GOOGLE,
-    colors: (id) => (COLOR_OPTIONS.GOOGLE[id % COLOR_OPTIONS.GOOGLE.length]),
+    colorChoices: COLOR_OPTIONS.GOOGLEY,
+    colors: (id) => (COLOR_OPTIONS.GOOGLEY[id % COLOR_OPTIONS.GOOGLEY.length]),
   };
 
   test('No trails', () => {

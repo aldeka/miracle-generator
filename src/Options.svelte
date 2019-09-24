@@ -118,15 +118,15 @@
       >
       default
     </label>
-    <label for="GOOGLE">
+    <label for="GOOGLEY">
       <input
         type="radio"
         name="colors"
-        id="GOOGLE"
-        checked={config.colorset === 'GOOGLE'}
-        on:change={() => setConfig('colorset', 'GOOGLE')}
+        id="GOOGLEY"
+        checked={config.colorset === 'GOOGLEY'}
+        on:change={() => setConfig('colorset', 'GOOGLEY')}
       >
-      google
+      googley
     </label>
     <label for="WARM">
       <input

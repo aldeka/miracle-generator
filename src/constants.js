@@ -13,7 +13,7 @@ export default {
   MAX_NEW_BEINGS: 3,
   COLOR_OPTIONS: {
     DEFAULT,
-    GOOGLE: ['red', 'yellow', 'blue', 'green'],
+    GOOGLEY: ['red', 'yellow', 'blue', 'green'],
     WARM: ['sienna', 'crimson', 'maroon', 'orangered', 'darkorange', 'red', 'yellow', 'khaki'],
     COOL: ['teal', 'yellowgreen', 'limegreen', 'darkseagreen', 'darkgreen', 'turquoise', 'dodgerblue', 'mediumblue', 'navy', 'indigo', 'violet', 'purple'],
   }

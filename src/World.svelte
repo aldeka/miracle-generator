@@ -60,10 +60,11 @@
 
   function checkForMiracles(t, index) {
     if (t.trail) {
-      if (t.trail.end.x > config.trailWidth &&
-        t.trail.end.x < canvas.width - config.trailWidth &&
-        t.trail.end.y > config.trailWidth &&
-        t.trail.end.y < canvas.height - config.trailWidth
+      const frame = config.trailWidth + 12;
+      if (t.trail.end.x > frame &&
+        t.trail.end.x < canvas.width - frame &&
+        t.trail.end.y > frame &&
+        t.trail.end.y < canvas.height - frame
       ) {
         const {
           isColliding,
