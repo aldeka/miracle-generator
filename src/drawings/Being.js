@@ -31,7 +31,13 @@ export const getVector = (start, worldWidth, worldHeight, trailWidth) => {
     yMultiplier = 1;
   }
   let maxDx = 0.90;
-  let minDx = 0.10;
+  let minDx = 0.40;
+  if (worldWidth / 4 < start.x && start.x < worldWidth * 3/4) {
+    minDx = 0.00;
+  }
+  if (worldHeight / 4 < start.y && start.y < worldHeight * 3/4) {
+    maxDx = 1.00;
+  }
   const rawDx = getRandomRange(maxDx, minDx);
   const rawDy = Math.sqrt(1 - Math.pow(rawDx, 2));
 
