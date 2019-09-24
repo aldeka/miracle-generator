@@ -17,7 +17,7 @@ export default function getCollision(b, otherBeings, trailWidth) {
       b2.trail.end.x - b.trail.end.x,
       b2.trail.end.y - b.trail.end.y
     );
-    if (distance < trailWidth) {
+    if (distance + 2 < trailWidth) {
       result.isColliding = true;
       result.otherBeingIndex = i;
       result.collision = { ...b.trail.end };

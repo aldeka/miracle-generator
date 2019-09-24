@@ -46,7 +46,7 @@ describe('getCollision', () => {
       {
         trail: {
           end: {
-            x: being.trail.end.x + (radius * 2) - 0.01,
+            x: being.trail.end.x + (radius * 2) - 2.01,
             y: 100,
           },
         },
@@ -56,7 +56,7 @@ describe('getCollision', () => {
     const result = getCollision(being, otherBeings, trailWidth);
     expect(result.isColliding).toBe(true);
     expect(result.otherBeingIndex).toEqual(0);
-    expect(result.collision.x).toEqual(being.trail.end.x + radius - 0.005);
+    expect(result.collision.x).toEqual(being.trail.end.x + radius - 1.005);
     expect(result.collision.y).toEqual(100);
   });
 
@@ -95,8 +95,8 @@ describe('getCollision', () => {
       {
         trail: {
           end: {
-            x: being.trail.end.x + 11,
-            y: being.trail.end.y + 11,
+            x: being.trail.end.x + 9.5,
+            y: being.trail.end.y + 9.5,
           },
         },
       },
@@ -112,7 +112,7 @@ describe('getCollision', () => {
 
     const result = getCollision(being, otherBeings, trailWidth);
     expect(result.isColliding).toBe(true);
-    expect(result.collision.x).toBe(105.5);
-    expect(result.collision.y).toBe(105.5);
+    expect(result.collision.x).toBe(104.75);
+    expect(result.collision.y).toBe(104.75);
   });
 });
