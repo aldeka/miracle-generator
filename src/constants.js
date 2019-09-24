@@ -1,4 +1,4 @@
-const SPEED = 4;
+const SPEED = 3;
 const TRAIL_WIDTH = 16;
 const DEFAULT_TRANSPARENCY = 0.7;
 const FADE_TIME = 15; // in seconds
