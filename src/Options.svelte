@@ -41,6 +41,7 @@
     height: 27px;
     border: none;
     padding: 4px;
+    margin: 0;
     border-radius: 0;
     font-weight: 200;
     opacity: 0;
@@ -51,11 +52,13 @@
   }
 
   .nav-toggle.x {
-    top: 0;
-    height: 36px;
+    top: auto;
+    bottom: 0;
+    height: 48px;
     width: 32px;
     font-size: 24px;
     line-height: 24px;
+    padding-bottom: 12px;
     font-weight: 100;
     background: none;
     opacity: 1;

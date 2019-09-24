@@ -54,18 +54,20 @@
   .nav-toggle {
     position: absolute;
     top: -27px;
-    right: left;
+    left: 0;
     height: 27px;
     border: none;
     padding: 4px;
+    margin: 0;
     border-radius: 0;
     font-weight: 200;
   }
 
   .nav-toggle.x {
-    top: 0;
-    right: 0;
-    height: 36px;
+    top: auto;
+    bottom: 0;
+    height: 48px;
+    padding-bottom: 12px;
     width: 32px;
     font-size: 24px;
     line-height: 24px;
