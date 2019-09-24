@@ -18,26 +18,20 @@ export const getVector = (start, worldWidth, worldHeight, trailWidth) => {
   let xMultiplier = getRandomItem([-1, 1]).item;
   let yMultiplier = getRandomItem([-1, 1]).item;
 
-  if (start.x >= worldWidth * 2/3) {
+  if (start.x >= worldWidth * 3/4) {
     xMultiplier = -1;
   }
-  if (start.y >= worldHeight * 2/3) {
+  if (start.y >= worldHeight * 3/4) {
     yMultiplier = -1;
   }
-  if (start.x <= worldWidth * 1/3) {
+  if (start.x <= worldWidth * 1/4) {
     xMultiplier = 1;
   }
-  if (start.y <= worldHeight * 1/3) {
+  if (start.y <= worldHeight * 1/4) {
     yMultiplier = 1;
   }
-  let maxDx = 0.80;
-  let minDx = 0.20;
-  if ((worldWidth / 8 < start.x && start.x < worldWidth * 7 / 8) ||
-    (worldHeight / 8 < start.y && start.y < worldHeight * 7 / 8)
-  ) {
-    maxDx = 1.00;
-    minDx = 0.00;
-  }
+  let maxDx = 0.90;
+  let minDx = 0.10;
   const rawDx = getRandomRange(maxDx, minDx);
   const rawDy = Math.sqrt(1 - Math.pow(rawDx, 2));
 

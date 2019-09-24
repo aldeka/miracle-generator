@@ -42,10 +42,10 @@ describe('Being', () => {
       };
       let result = getVector(start, worldWidth, worldHeight);
       expect(result.dx).toBeGreaterThan(0);
-      expect(result.dx).toBeLessThan(0.8);
-      expect(result.dx).toBeGreaterThanOrEqual(0.2);
-      expect(result.dy).toBeGreaterThanOrEqual(0.6);
-      expect(result.dy).toBeLessThan(0.98);
+      expect(result.dx).toBeLessThan(0.9);
+      expect(result.dx).toBeGreaterThanOrEqual(0.1);
+      expect(result.dy).toBeGreaterThanOrEqual(0.43);
+      expect(result.dy).toBeLessThan(0.995);
 
       start = {
         x: 912,
@@ -53,8 +53,8 @@ describe('Being', () => {
       };
       result = getVector(start, worldWidth, worldHeight);
       expect(result.dx).toBeLessThan(0);
-      expect(result.dx).toBeGreaterThan(-0.8);
-      expect(result.dx).toBeLessThanOrEqual(-0.2);
+      expect(result.dx).toBeGreaterThan(-0.9);
+      expect(result.dx).toBeLessThanOrEqual(-0.1);
 
       start = {
         x: 12,
@@ -63,8 +63,8 @@ describe('Being', () => {
       result = getVector(start, worldWidth, worldHeight);
       expect(result.dy).toBeGreaterThan(0);
       expect(result.dx).toBeGreaterThan(0);
-      expect(result.dx).toBeGreaterThanOrEqual(0.2);
-      expect(result.dx).toBeLessThan(0.8);
+      expect(result.dx).toBeGreaterThanOrEqual(0.1);
+      expect(result.dx).toBeLessThan(0.9);
 
       start = {
         x: 12,
@@ -73,8 +73,8 @@ describe('Being', () => {
       result = getVector(start, worldWidth, worldHeight);
       expect(result.dy).toBeLessThan(0);
       expect(result.dx).toBeGreaterThan(0);
-      expect(result.dx).toBeGreaterThanOrEqual(0.2);
-      expect(result.dx).toBeLessThan(0.8);
+      expect(result.dx).toBeGreaterThanOrEqual(0.1);
+      expect(result.dx).toBeLessThan(0.9);
     });
   });
 });
