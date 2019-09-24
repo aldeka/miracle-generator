@@ -32,9 +32,9 @@ const generateMiracle = (pos, color1, color2) => {
   const draw = (context, config, { createdAt }) => {
     let transparency = config.transparency;
     if (createdAt !== 0) {
-      transparency = Math.max(config.transparency - (config.transparency * ((Date.now() - createdAt) / 1000) / (config.fadeTime * 32)), 0);
-      if (!config.mortalMiracles && transparency < config.transparency / 4) {
-        transparency = config.transparency / 4;
+      transparency = Math.max(1 - ((Date.now() - createdAt) / 1000) / (config.fadeTime * 16), 0);
+      if (!config.mortalMiracles && transparency < config.transparency / 2) {
+        transparency = config.transparency / 2;
       }
       if (transparency <= 0) {
         isFaded = true;
